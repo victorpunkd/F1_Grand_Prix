@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link type="text/css" rel="stylesheet" href="CSS/master.css">
+     <script type="text/javascript" src="script\master.js"></script>
+	<title>Koji Grand Prix</title>
+  </head>
+  <body class="backgroundImage w3-display-container" onload="startGame()">	
+	<canvas id="gameScreen" class="w3-display-middle" width="350"  height="500" style="border:1px solid #000000;">
+	</canvas> 
+	
+	<script>
+let myCar;
+let myObstacles = [];
+let rightKeyDownInterval;
+let leftKeyDownInterval;
+
+function startGame() {
+    myCar = new component(51, 133, "images/myCar.png", 10, 370,"image");
+    myGameArea.start();
+}
+
+let myGameArea = {
+    canvas : document.getElementById("gameScreen"),
+    start : function() {
+        this.context = this.canvas.getContext("2d");
+        this.frameNo = 0;
+        this.interval = setInterval(updateGameArea, 10);
+        },
+    clear : function() {
+        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    }
+}
+
+function component(width, height, color, x, y, type) {
+    this.type = type;
+	 if (type == "image") {
+    this.image = new Image();
+    this.image.src = color;
+  }
+    this.score = 0;
+    this.width = width;
+    this.height = height;
+    this.speedX = 0;
+    this.speedY = 0;    
+    this.x = x;
+    this.y = y;
+    this.gravity = 0;
+    this.gravitySpeed = 0;
+    this.update = function() {
+        ctx = myGameArea.context;
+        if (type == "image") {
+      ctx.drawImage(this.image,
+        this.x,
+        this.y,
+        this.width, this.height);
+    }  else {
+            ctx.fillStyle = color;
+            ctx.fillRect(this.x, this.y, this.width, this.height);
+        }
+    }
+    this.newPos = function() {
+		//this.x=20;
+		//this.y=360;
+    };
+	
+	this.slideRight = function() {
+	
+		if(this.x<290){
+			this.x+=5;
+			}
+    };
+	
+	this.slideLeft = function() {
+		if(this.x>10){
+			this.x-=5;
+			}
+    };
+
+    this.crashWith = function(otherobj) {
+        let myleft = this.x;
+        let myright = this.x + (this.width);
+        let mytop = this.y;
+        let mybottom = this.y + (this.height);
+        let otherleft = otherobj.x;
+        let otherright = otherobj.x + (otherobj.width);
+        let othertop = otherobj.y;
+        let otherbottom = otherobj.y + (otherobj.height);
+        let crash = true;
+        if ((mybottom < othertop) || (mytop > otherbottom) || (myright < otherleft) || (myleft > otherright)) {
+            crash = false;
+        }
+        return crash;
+    }
+}
+
+function updateGameArea() {
+    let x, height, gap, minHeight, maxHeight, minGap, maxGap;
+    for (i = 0; i < myObstacles.length; i += 1) {
+        if (myCar.crashWith(myObstacles[i])) {
+            return;
+        } 
+    }
+    myGameArea.clear();
+    myGameArea.frameNo += 1;
+    if (myGameArea.frameNo == 1 || everyinterval(150)) {
+        x = myGameArea.canvas.width;
+        minHeight = 20;
+        maxHeight = 200;
+        height = Math.floor(Math.random()*(maxHeight-minHeight+1)+minHeight);
+        minGap = 50;
+        maxGap = 200;
+        gap = Math.floor(Math.random()*(maxGap-minGap+1)+minGap);
+        myObstacles.push(new component(10, height, "green", x, 0));
+        myObstacles.push(new component(10, x - height - gap, "green", x, height + gap));
+    }
+    for (i = 0; i < myObstacles.length; i += 1) {
+        myObstacles[i].x += -1;
+        myObstacles[i].update();
+    }
+    myCar.newPos();
+    myCar.update();
+}
+
+function everyinterval(n) {
+    if ((myGameArea.frameNo / n) % 1 == 0) {return true;}
+    return false;
+}
+
+window.addEventListener("keydown", function (event) {
+	if(event.keyCode==37)
+		myCar.slideLeft()
+	if(event.keyCode==39)
+		myCar.slideRight()
+});
+
+	</script>
+  </body>
+</html>
