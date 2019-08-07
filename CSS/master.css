@@ -1,14 +1,45 @@
-.backgroundImage{
-  background-image: url("photographer.jpg");
-  background-color:light gray; 
-  height: 100vh; 
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover; 
+body {
+  font-family: "Play", sans-serif;
 }
 
-.canvas{
-	height: 80%;
-	width: 30%;
-	background-color: gray;
+.backgroundImage {
+  background-image: url("images/background.jpg");
+  background-color: light gray;
+  height: 100vh;
+  width: 100vw;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.canvas {
+  height: 80%;
+  width: 30%;
+  background-color: gray;
+}
+
+.button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  border-radius: 10px;
+  background-color: white;
+  color: black;
+  transition: color 0.3s;
+}
+
+.button:hover {
+  color: gray;
+}
+
+.primaryButtonFontSize {
+  font-size: 40px;
+}
+
+.secondaryButtonFontSize {
+  font-size: 20px;
+}
+
+i {
+  color: #e5322d;
 }
