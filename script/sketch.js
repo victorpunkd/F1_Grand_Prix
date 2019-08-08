@@ -22,9 +22,9 @@ function preload() {
 //setup() will call next once the preload is done loading all the files, its also a predefined function of p5.js
 function setup() {
   preloadDone = 1;
+  song.setVolume(0.2);
   song.play();
   song.loop();
-  song.setVolume(0.2);
 }
 
 //once the user clicks on the start the race button in the first page this function will execute

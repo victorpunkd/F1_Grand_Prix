@@ -3,7 +3,7 @@ body {
 }
 
 .backgroundImage {
-  background-image: url("images/background.jpg");
+  background-image: url("../images/background.jpg");
   background-color: light gray;
   height: 100vh;
   width: 100vw;
@@ -12,10 +12,12 @@ body {
   background-size: cover;
 }
 
-.canvas {
-  height: 80%;
-  width: 30%;
-  background-color: gray;
+.poster {
+  display: block;
+  background-image: url("../images/poster.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
 }
 
 .button {
@@ -32,8 +34,16 @@ body {
   color: gray;
 }
 
+.primaryText {
+  font-size: 40px;
+}
+
 .primaryButtonFontSize {
   font-size: 40px;
+}
+
+.secondaryText {
+  font-size: 20px;
 }
 
 .secondaryButtonFontSize {
@@ -42,4 +52,33 @@ body {
 
 i {
   color: #e5322d;
+}
+
+/* All media queries */
+
+/* for tabs and ipads*/
+@media screen and (max-width: 1050px) and (min-width: 601px) {
+  .primaryButtonFontSize {
+    font-size: 40px;
+  }
+}
+
+/* For all size of mobile screens, screen width 600px or smaller */
+
+@media screen and (max-width: 600px) {
+  .primaryText {
+    font-size: 20px;
+  }
+
+  .primaryButtonFontSize {
+    font-size: 20px;
+  }
+
+  .secondaryText {
+    font-size: 15px;
+  }
+
+  .secondaryButtonFontSize {
+    font-size: 15px;
+  }
 }

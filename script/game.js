@@ -1,9 +1,9 @@
 let myCar;
-let myCarImage = "images/myCar.png";
-let myCarLeftImage = "images/myCarLeft.png";
-let myCarRightImage = "images/myCarRight.png";
+let myCarImage = "./images/myCar.png";
+let myCarLeftImage = "./images/myCarLeft.png";
+let myCarRightImage = "./images/myCarRight.png";
 let myBackground;
-let raceTrackImage = "images/raceTrack.jpg";
+let raceTrackImage = "./images/raceTrack.jpg";
 let myObstacles = [];
 let opponentCarToggle = 0;
 let pausePlayToggle = 0;
@@ -11,9 +11,31 @@ let muteUnmuteToggle = 0;
 let songSpeed = 1;
 let gameSpeed = 30;
 let gameLevelUpSpeed = 5;
-let myCarTurningSpeed = 10;
-let opponnentCarPush = 180;
+let myCarTurningSpeed = 5;
+let opponnentCarPush = 150;
 let score = 0;
+let touchStartX;
+let touchEndX;
+let touchStartY;
+
+document
+  .getElementById("gameScreen")
+  .addEventListener("touchstart", function(e) {
+    touchStartX = e.touches[0].clientX;
+  });
+
+document
+  .getElementById("gameScreen")
+  .addEventListener("touchmove", function(e) {
+    touchEndX = e.touches[0].clientX;
+    if (touchStartX > touchEndX) myCar.slideLeft();
+    else myCar.slideRight();
+  });
+
+document.getElementById("gameScreen").addEventListener("touchend", function(e) {
+  myCar.width = 51;
+  myCar.image.src = myCarImage;
+});
 
 //get saved highest score from locastorage if there is no localstorage data available assign 0
 document.getElementById("highestScore").innerHTML =
@@ -26,7 +48,6 @@ function levelUp(gameLevelUpSpeed) {
   clearInterval(interval); //clearing interval coz not clearing the interval is not working
   interval = setInterval(updateGameArea, gameSpeed); //setting again
   song.rate((songSpeed = songSpeed + 0.05));
-  console.log(gameSpeed);
 }
 
 function muteUnmuteSound() {
@@ -53,19 +74,20 @@ function pausePlay() {
     document.getElementById("playPauseIcon").className = "fa fa-play";
     document.getElementById("playPauseText").innerHTML = "Play";
     clearInterval(interval);
-    muteUnmuteSound();
+    if (muteUnmuteToggle != 1) muteUnmuteSound();
     pausePlayToggle = 1;
   } else {
     document.getElementById("playPauseIcon").className = "fa fa-pause";
     document.getElementById("playPauseText").innerHTML = "Pause";
     interval = setInterval(updateGameArea, gameSpeed);
-    muteUnmuteSound();
+    if (muteUnmuteToggle != 1) muteUnmuteSound();
     pausePlayToggle = 0;
   }
 }
 
 //first this will execute this will start the game and it will call all the function needed to start the game
 function startGame() {
+  if (window.innerWidth < 600) myCarTurningSpeed = 5; //if touch screen then setting less turning speed
   document.getElementById("cover").style.display = "none"; //cover page will be hidden
   backgroundEffect.play(); //background effect sound car sound will be played in loop
   backgroundEffect.loop(); //background effect sound car sound will be played in loop
@@ -139,12 +161,16 @@ function component(width, height, imageSource, x, y, type) {
 
   this.slideRight = function() {
     if (this.x < 290) {
+      myCar.width = 53;
+      myCar.image.src = myCarRightImage;
       this.x += myCarTurningSpeed;
     }
   };
 
   this.slideLeft = function() {
     if (this.x > 10) {
+      myCar.width = 55;
+      myCar.image.src = myCarLeftImage;
       this.x -= myCarTurningSpeed;
     }
   };
