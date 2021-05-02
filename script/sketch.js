@@ -5,17 +5,19 @@ let preloadDone = 0,
 //preload() will call automatically when p5.js loads its a predefined function of p5.js to load all the sounds
 function preload() {
   backgroundEffect = loadSound(
-    "https://victorsfiles.s3.ap-south-1.amazonaws.com/formula1_2.wav"
+    "https://f1-grand-prix.s3.ap-south-1.amazonaws.com/soundEffects/formula1_2.wav"
   );
 
   song = loadSound(
-    "https://victorsfiles.s3.ap-south-1.amazonaws.com/victor.wav"
+    "https://f1-grand-prix.s3.ap-south-1.amazonaws.com/soundEffects/victor.wav"
   );
 
-  tyre = loadSound("https://victorsfiles.s3.ap-south-1.amazonaws.com/tyre.mp3");
+  tyre = loadSound(
+    "https://f1-grand-prix.s3.ap-south-1.amazonaws.com/soundEffects/tyre.mp3"
+  );
 
   crash = loadSound(
-    "https://victorsfiles.s3.ap-south-1.amazonaws.com/crash.wav"
+    "https://f1-grand-prix.s3.ap-south-1.amazonaws.com/soundEffects/crash.wav"
   );
 }
 
